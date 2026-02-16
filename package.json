@@ -1,0 +1,28 @@
+{
+  "name": "submission",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start:prod": "NODE_ENV=production node server.js",
+    "start:dev": "nodemon server.js",
+    "migrate": "node-pg-migrate",
+    "lint": "eslint ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "node-pg-migrate": "^8.0.4",
+    "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.0",
+    "nodemon": "^3.1.11"
+  }
+}
