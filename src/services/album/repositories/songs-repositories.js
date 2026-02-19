@@ -59,3 +59,5 @@ class SongsRepositories {
         return result.rows[0].id;
     }
 }
+
+export default SongsRepositories;
