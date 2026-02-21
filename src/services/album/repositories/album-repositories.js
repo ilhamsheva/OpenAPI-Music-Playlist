@@ -20,15 +20,6 @@ class AlbumRepositories {
         return this.pool.query(query);
     }
 
-    // Query for getAllAlbum
-    async getAllAlbum() {
-        const query = {
-            text: "SELECT * FROM albums",
-        };
-        const result = await this.pool.query(query);
-        return result.rows;
-    }
-
     // Query for getAlbumById
     async getAlbumById(id) {
         const query = {
