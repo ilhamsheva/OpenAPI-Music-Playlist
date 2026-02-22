@@ -1,6 +1,6 @@
-import ClientError from "./client-error";
-import NotFoundError from "./notfound-error";
-import InvariantError from "./invariant-error";
+import ClientError from "./client-error.js";
+import NotFoundError from "./notfound-error.js";
+import InvariantError from "./invariant-error.js";
 
 export {
     ClientError,
