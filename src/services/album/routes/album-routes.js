@@ -6,8 +6,8 @@ import { albumSchema } from "../../validator/schema.js";
 const router = Router();
 
 router.post("/albums", validate(albumSchema), addAlbumHandler);
-router.get("/albums/:id", validate(albumSchema), getAlbumByIdHandler);
+router.get("/albums/:id", getAlbumByIdHandler);
 router.put("/albums/:id", validate(albumSchema), updateAlbumByIdHandler);
-router.delete("/albums/:id", validate(albumSchema), deleteAlbumByIdHandler);
+router.delete("/albums/:id", deleteAlbumByIdHandler);
 
 export default router;
