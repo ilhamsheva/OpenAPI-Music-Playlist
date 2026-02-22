@@ -21,13 +21,13 @@ export const addAlbumHandler = async(req, res, next) => {
 export const getAlbumByIdHandler = async(req, res, next) => {
     const { id } = req.params;
 
-    const album = await albumRepository.getAlbumById(id);
+    const album = await albumRepository.getAlbumWithSongs(id);
 
     if (!album) {
         return next(new NotFoundError("Album tidak ditemukan"));
     }
 
-    return response(res, 200, "Album berhasil diambil", album);
+    return response(res, 200, "Album berhasil diambil", { album });
 }
 
 export const updateAlbumByIdHandler = async(req, res, next) => {

@@ -11,4 +11,10 @@ export const songsSchema = Joi.object({
     genre: Joi.string().required(),
     performer: Joi.string().required(),
     duration: Joi.number().integer().positive(),
+    albumId: Joi.string().optional(),
+});
+
+export const songsQuerySchema = Joi.object({
+    title: Joi.string(),
+    performer: Joi.string(),
 });

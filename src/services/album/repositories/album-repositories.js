@@ -31,6 +31,29 @@ export class AlbumRepositories {
     return result.rows[0];
   }
 
+  // Query for getAlbumById with songs
+  async getAlbumWithSongs(id) {
+    const albumQuery = {
+      text: "SELECT id, name, year FROM album WHERE id = $1",
+      values: [id]
+    };
+    
+    const songsQuery = {
+      text: 'SELECT id, title, performer FROM songs WHERE "albumId" = $1',
+      values: [id]
+    };
+    
+    const albumResult = await this.pool.query(albumQuery);
+    const songsResult = await this.pool.query(songsQuery);
+
+    if (!albumResult.rows.length) return null;
+
+    return {
+      ...albumResult.rows[0],
+      songs: songsResult.rows
+    };
+  }
+
   // Query for update album
   async updateAlbum({ id, name, year }) {
     const query = {
@@ -49,7 +72,7 @@ export class AlbumRepositories {
     };
 
     const result = await this.pool.query(query);
-    return result.rows[0].id;
+    return result.rows[0];
   }
 }
 
