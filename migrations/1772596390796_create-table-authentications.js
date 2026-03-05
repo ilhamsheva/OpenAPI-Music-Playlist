@@ -9,19 +9,10 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-    pgm.createTable('album', {
-        id: {
-            type: 'VARCHAR(75)',
-            unique: true,
-            primaryKey: true
-        },
-        name: {
-            type: 'VARCHAR(255)',
-            notNull: true
-        },
-        year: {
-            type: 'INTEGER',
-            notNull: true
+    pgm.createTable('authentications', {
+        token: {
+            type: 'TEXT',
+            notNull: true,
         }
     });
 };
@@ -31,6 +22,4 @@ export const up = (pgm) => {
  * @param run {() => void | undefined}
  * @returns {Promise<void> | void}
  */
-export const down = (pgm) => {
-    pgm.dropTable('album');
-};
+export const down = (pgm) => {};
