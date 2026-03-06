@@ -9,13 +9,23 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-    pgm.addColumn('playlists', {
-        owner: {
+    pgm.createTable('playlist_songs', {
+        id: {
+            type: 'VARCHAR(50)',
+            primaryKey: true,
+        },
+        playlist_id: {
             type: 'VARCHAR(50)',
             notNull: true,
-            references: 'users(id)',
+            references: 'playlists(id)',
             onDelete: 'CASCADE',
-        }
+        },
+        song_id: {
+            type: 'VARCHAR(75)',
+            notNull: true,
+            references: 'songs(id)',
+            onDelete: 'CASCADE',
+        },
     });
 };
 
@@ -25,5 +35,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-    pgm.dropColumn('playlists', 'owner');
+    pgm.dropTable('playlist_songs');
 };
