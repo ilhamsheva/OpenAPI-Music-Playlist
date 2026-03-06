@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import response from "../../../utils/response.js";
 import { InvariantError, NotFoundError } from "../../../exceptions/index.js";
 import { AlbumRepositories } from "../repositories/album-repositories.js";
