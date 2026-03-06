@@ -21,10 +21,6 @@ export const getAllSongsHandler = async (req, res, next) => {
 
     const songs = await songRepositories.getAllSongs({ title, performer });
 
-    if (!songs) {
-        return next(new InvariantError("Gagal mendapatkan semua lagu"));
-    }
-
     return response(res, 200, "Berhasil mendapatkan semua lagu", {
         songs
     });
@@ -39,7 +35,7 @@ export const getSongByIdHandler = async (req, res, next) => {
         return next(new NotFoundError("Lagu tidak ditemukan"));
     }
 
-    return response(res, 200, "Berhasil mendapatkan lagu", { song: song });
+    return response(res, 200, "Berhasil mendapatkan lagu", { song });
 };
 
 export const editSongByIdHandler = async (req, res, next) => {
