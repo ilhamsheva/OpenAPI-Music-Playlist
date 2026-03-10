@@ -1,9 +1,11 @@
 import { nanoid } from "nanoid";
 import { Pool } from "pg";
+import CacheService from "../../../cache/redis-service.js";
 
 class LikeRepositories {
   constructor() {
     this._pool = new Pool();
+    this._cache = new CacheService();
   }
 
   async addLike({ userId, albumId }) {
@@ -16,6 +18,10 @@ class LikeRepositories {
     };
 
     const result = await this._pool.query(query);
+
+    // Invalidate cache when new like is added
+    await this._cache.delete(`album:${albumId}:likes`);
+
     return result.rows[0];
   }
 
@@ -26,21 +32,37 @@ class LikeRepositories {
     };
 
     const result = await this._pool.query(query);
+
+    // Invalidate cache when like is removed
+    await this._cache.delete(`album:${albumId}:likes`);
+
     return result.rows[0];
   }
 
   async getAlbumLikes(albumId) {
-    const query = {
-      text: `
-        SELECT COUNT(*) 
-        FROM user_album_likes
-        WHERE album_id = $1
-      `,
-      values: [albumId],
-    };
+    try {
+      // Try to get from cache first
+      const cachedLikes = await this._cache.get(`album:${albumId}:likes`);
+      return { likes: cachedLikes, fromCache: true };
+      
+    } catch (error) {
+      // Cache miss, query from database
+      const query = {
+        text: `
+          SELECT COUNT(*) 
+          FROM user_album_likes
+          WHERE album_id = $1
+        `,
+        values: [albumId],
+      };
 
-    const result = await this._pool.query(query);
-    return result.rows[0].count;
+      const result = await this._pool.query(query);
+      const likes = result.rows[0].count;
+      
+      // Store in cache for 30 minutes (1800 seconds)
+      await this._cache.set(`album:${albumId}:likes`, likes, 1800);
+      return { likes, fromCache: false };
+    }
   }
 
   async verifyUserLike({ userId, albumId }) {
