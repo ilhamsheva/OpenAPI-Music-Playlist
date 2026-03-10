@@ -22,6 +22,7 @@ export const addLikeHandler = async (req, res, next) => {
         }
 
         await likeRepo.addLike({ userId, albumId });
+        
         return response(res, 201, "Berhasil like album");
     } catch (error) {
         next(error);
@@ -37,7 +38,12 @@ export const getAlbumLikesHandler = async (req, res, next) => {
             return next(new NotFoundError("Album tidak ditemukan"));
         }
 
-        const likes = await likeRepo.getAlbumLikes(albumId);
+        const { likes, fromCache } = await likeRepo.getAlbumLikes(albumId);
+        
+        if (fromCache) {
+            res.setHeader('X-Data-Source', 'cache');
+        }
+        
         return response(res, 200, "Berhasil mengambil jumlah likes", { likes: parseInt(likes) });
     } catch (error) {
         next(error);
@@ -53,7 +59,8 @@ export const deleteAlbumLikesHandler = async (req, res, next) => {
             return next(new NotFoundError("Album tidak ditemukan"));
         }
 
-        const unlikeAlbum = await likeRepo.deleteLike({ userId: req.user.id, albumId });
+        await likeRepo.deleteLike({ userId: req.user.id, albumId });
+        
         return response(res, 200, "Berhasil unlike album");
     } catch (error) {
         next(error);
