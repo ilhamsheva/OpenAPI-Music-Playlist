@@ -54,3 +54,7 @@ export const collaborationSchema = Joi.object({
   playlistId: Joi.string().required(),
   userId: Joi.string().required(),
 });
+
+export const exportPlaylistSchema = Joi.object({
+  targetEmail: Joi.string().email({ tlds: true }).required(),
+});
