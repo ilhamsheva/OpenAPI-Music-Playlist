@@ -217,3 +217,5 @@ API menggunakan custom error classes:
 - `AuthorizationError` (403) - Forbidden
 - `NotFoundError` (404) - Resource not found
 - `InvariantError` (400) - Validation error
+
+# THANKS FOR ATTENTION :)
