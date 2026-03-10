@@ -3,11 +3,13 @@ import NotFoundError from "./notfound-error.js";
 import InvariantError from "./invariant-error.js";
 import AuthenticationError from "./authentication-error.js";
 import AuthorizationError from "./authorization-error.js";
+import BigLargeImageError from "./big-large-image-error.js";
 
 export {
     ClientError,
     NotFoundError,
     InvariantError,
     AuthenticationError,
-    AuthorizationError
+    AuthorizationError,
+    BigLargeImageError
 }

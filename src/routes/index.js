@@ -6,6 +6,7 @@ import authentications from "../services/authentications/routes/auth-routes.js";
 import playlists from "../services/playlists/routes/playlist-routes.js";
 import collaborations from "../services/collaborations/routes/collab-routes.js";
 import exports from "../services/exports/routes/export-routes.js";
+import uploads from "../services/uploads/routes/upload-routes.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/", authentications);
 router.use("/", playlists);
 router.use("/", collaborations);
 router.use("/", exports);
+router.use("/", uploads);
 
 export default router;

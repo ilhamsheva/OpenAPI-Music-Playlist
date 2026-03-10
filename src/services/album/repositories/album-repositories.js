@@ -34,23 +34,41 @@ export class AlbumRepositories {
   // Query for getAlbumById with songs
   async getAlbumWithSongs(id) {
     const albumQuery = {
-      text: "SELECT id, name, year FROM album WHERE id = $1",
-      values: [id]
+      text: `
+      SELECT 
+        id, 
+        name, 
+        year, 
+        cover AS "coverUrl"
+      FROM album
+      WHERE id = $1
+    `,
+      values: [id],
     };
-    
+
     const songsQuery = {
-      text: 'SELECT id, title, performer FROM songs WHERE "albumId" = $1',
-      values: [id]
+      text: `
+      SELECT 
+        id, 
+        title, 
+        performer
+      FROM songs
+      WHERE "albumId" = $1
+    `,
+      values: [id],
     };
-    
+
     const albumResult = await this.pool.query(albumQuery);
-    const songsResult = await this.pool.query(songsQuery);
 
     if (!albumResult.rows.length) return null;
 
+    const songsResult = await this.pool.query(songsQuery);
+
+    const album = albumResult.rows[0];
+
     return {
-      ...albumResult.rows[0],
-      songs: songsResult.rows
+      ...album,
+      songs: songsResult.rows,
     };
   }
 
@@ -69,6 +87,16 @@ export class AlbumRepositories {
     const query = {
       text: "DELETE FROM album WHERE id = $1 RETURNING id",
       values: [id],
+    };
+
+    const result = await this.pool.query(query);
+    return result.rows[0];
+  }
+
+  async updateAlbumCover({ id, coverUrl }) {
+    const query = {
+      text: "UPDATE album SET cover = $1 WHERE id = $2 RETURNING id",
+      values: [coverUrl, id],
     };
 
     const result = await this.pool.query(query);
