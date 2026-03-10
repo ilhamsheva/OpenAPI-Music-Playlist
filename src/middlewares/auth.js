@@ -11,7 +11,6 @@ const authenticationToken = async (req, res, next) => {
     try {
         const token = authHeader.split('Bearer ')[1];
         const user = TokenManager.verifyAccessToken(token);
-        console.log("User decoded: ", user);
         req.user = user;
         return next();
     } catch (error) {
