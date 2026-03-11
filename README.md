@@ -218,4 +218,5 @@ API menggunakan custom error classes:
 - `NotFoundError` (404) - Resource not found
 - `InvariantError` (400) - Validation error
 
+
 # THANKS FOR ATTENTION :)
