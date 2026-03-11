@@ -1,7 +1,7 @@
 class Listener {
-    constructor(mailSender, playlistService) {
-        this._mailSender = mailSender;
+    constructor(playlistService, mailSender) {
         this._playlistService = playlistService;
+        this._mailSender = mailSender;
 
         this._listen = this.listen.bind(this);
     }
